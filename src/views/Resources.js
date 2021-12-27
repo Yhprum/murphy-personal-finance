@@ -1,22 +1,32 @@
 import React from "react";
-import { useNavigate } from 'react-router-dom';
-import { Container, Row, Col, Card } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
+import ResourcePreview from "../components/ResourcePreview";
+import "../assets/css/Resources.css";
 
 function Resources() {
-  let navigate = useNavigate();
-
   return (
     <Container>
       <Row>
         <Col>
-          <Card className="resource-card" onClick={() => navigate("retirement")}>
-            Retirement Savings Plan
-          </Card>
+          <ResourcePreview
+            title="Retirement Calculator"
+            description="How much will I have saved in the future for retirement if I start now?"
+            path="retirement"
+          />
         </Col>
         <Col>
-          <Card className="resource-card" onClick={() => navigate("loans")}>
-            Loan Calculator
-          </Card>
+          <ResourcePreview
+            title="Loan Calculator"
+            description="How much is my monthly loan/mortgage payment? How will points affect the amount I pay?"
+            path="loans"
+          />
+        </Col>
+        <Col>
+          <ResourcePreview
+            title="Savings Calculator"
+            description="How much do I need to save/invest now to make a certain goal in the future assuming a certain rate of return?"
+            path="save"
+          />
         </Col>
       </Row>
     </Container>

@@ -24,7 +24,7 @@ function LoanCalculator() {
           <Button variant="outline-secondary" onClick={() => setComparisons(c => c + 1)}>+ Add Comparison</Button>
         </Col>
         <Col lg={6}>
-          <h3>How much is my monthly loan payment (can be used for any loan type)?</h3>
+          <h3>How much is my monthly loan payment (can be used for any amortizing loan type)?</h3>
           <p>This excludes loan documentation costs that can run $3,000-$6,000.</p>
           <p>Mortgage insurance (benefits the lender) and property tax impounds are not included. You would prefer to pay property taxes separately and not pay mortgage insurance in most cases.</p>
           <p>Points lower the interest rate; the more points you pay, the lower the rate on your loan.</p>

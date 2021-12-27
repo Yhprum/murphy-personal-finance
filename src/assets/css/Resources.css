@@ -1,0 +1,16 @@
+.resource-card {
+  align-items: center;
+  text-align: center;
+  height: 100%;
+}
+
+.resource-card:hover {
+  cursor: pointer;
+  background-color: lightgrey;
+}
+
+.resource-card img {
+  margin: 1rem;
+  width: 80%;
+  /*max-width: 333px;*/
+}

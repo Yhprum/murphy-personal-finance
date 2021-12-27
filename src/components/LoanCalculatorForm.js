@@ -81,7 +81,7 @@ function LoanCalculatorForm({ title, rate, points }) {
       </Form>
       <Row>
         <Col sm={8}>
-          Mortgage Payment per Month (P&I only)
+          Loan/Mortgage Payment per Month (P&I only)
         </Col>
         <Col sm={4}>
           {currency(pmt)}

@@ -1,3 +1,15 @@
+export function PV(rate, periods, payment, future, type=0) {
+  type = type ? 1 : 0
+  if(rate === -1) {
+    return null;
+  }
+  if (rate === 0) {
+    return -payment * periods - future
+  } else {
+    return ((1 - Math.pow(1 + rate, periods)) * payment * (1 + rate * type) / rate - future) / Math.pow(1 + rate, periods)
+  }
+}
+
 export function FV(rate, periods, payment, value) {
   if (rate === 0) {
     return -value - payment * periods;
