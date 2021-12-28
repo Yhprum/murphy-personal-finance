@@ -9,6 +9,7 @@ import Header from "./components/Header";
 import Save from "./views/resources/Save";
 import Earn from "./views/resources/Earn";
 import Later from "./views/resources/Later";
+import HowLong from "./views/resources/HowLong";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/resources/save" element={<Save />} />
         <Route path="/resources/earn" element={<Earn />} />
         <Route path="/resources/later" element={<Later />} />
+        <Route path="/resources/howlong" element={<HowLong />} />
       </Routes>
     </BrowserRouter>
   );

@@ -61,7 +61,7 @@ function Later() {
       </Form>
       <Row>
         <Col sm={8}>
-          What do I need to earn as a rate of return?
+          How much will I have in the future?
         </Col>
         <Col sm={4}>
           {currency(fv)}
@@ -113,7 +113,7 @@ function Later() {
       </Form>
       <Row>
         <Col sm={8}>
-          What do I need to earn as a rate of return?
+          How much will I have in the future?
         </Col>
         <Col sm={4}>
           {currency(fvAdd)}

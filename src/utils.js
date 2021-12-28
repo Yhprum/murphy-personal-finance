@@ -4,9 +4,9 @@ export function PV(rate, periods, payment, future, type=0) {
     return null;
   }
   if (rate === 0) {
-    return -payment * periods - future
+    return -payment * periods - future;
   } else {
-    return ((1 - Math.pow(1 + rate, periods)) * payment * (1 + rate * type) / rate - future) / Math.pow(1 + rate, periods)
+    return ((1 - Math.pow(1 + rate, periods)) * payment * (1 + rate * type) / rate - future) / Math.pow(1 + rate, periods);
   }
 }
 
@@ -48,6 +48,19 @@ export function RATE(r, n, e, t=0, a=0, o=.01) {
     f -= l / m;
   }
   return f;
+}
+
+export function NPER(rate, payment, present, future, type=0) {
+  if (rate === 0) {
+    if (payment === 0) {
+      return null;
+    }
+    return (-present - future) / payment;
+  }
+  if (type) {
+    payment *= 1 + rate;
+  }
+  return Math.log( (payment  - future * rate) / (present * rate + payment)) / Math.log(1 + rate);
 }
 
 export const currency = num => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(num);
