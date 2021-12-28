@@ -7,6 +7,8 @@ import RetirementCalculator from "./views/resources/RetirementCalculator";
 import LoanCalculator from "./views/resources/LoanCalculator";
 import Header from "./components/Header";
 import Save from "./views/resources/Save";
+import Earn from "./views/resources/Earn";
+import Later from "./views/resources/Later";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path="/resources/retirement" element={<RetirementCalculator />} />
         <Route path="/resources/loans" element={<LoanCalculator />} />
         <Route path="/resources/save" element={<Save />} />
+        <Route path="/resources/earn" element={<Earn />} />
+        <Route path="/resources/later" element={<Later />} />
       </Routes>
     </BrowserRouter>
   );

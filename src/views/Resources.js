@@ -28,6 +28,20 @@ function Resources() {
             path="save"
           />
         </Col>
+        <Col>
+          <ResourcePreview
+            title="Earnings Need Calculator"
+            description="How much will I have to earn if I save/invest now and want a certain amount in the future?"
+            path="earn"
+          />
+        </Col>
+        <Col>
+          <ResourcePreview
+            title="Future Value Calculator"
+            description="How much will I have in the future if I save/invest a certain amount now and earn a certain interest/income rate?"
+            path="later"
+          />
+        </Col>
       </Row>
     </Container>
   );
