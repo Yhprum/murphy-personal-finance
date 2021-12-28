@@ -1,6 +1,11 @@
+.resources>div {
+  margin-bottom: 1rem;
+}
+
 .resource-card {
   align-items: center;
   text-align: center;
+  padding: .5rem;
   height: 100%;
 }
 
@@ -10,7 +15,6 @@
 }
 
 .resource-card img {
-  margin: 1rem;
+  margin: .5rem;
   width: 80%;
-  /*max-width: 333px;*/
 }

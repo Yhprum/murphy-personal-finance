@@ -6,7 +6,7 @@ import "../assets/css/Resources.css";
 function Resources() {
   return (
     <Container>
-      <Row>
+      <Row className="resources">
         <Col lg={4} md={6}>
           <ResourcePreview
             title="Retirement Calculator"
