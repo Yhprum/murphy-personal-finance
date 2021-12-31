@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import { currency, PV, PMT } from "../../utils";
+import InputType from "../../components/InputType";
 
 function Save() {
   const [values, setValues] = useState({
@@ -11,7 +12,6 @@ function Save() {
     pvAdd: 20000,
     fvAdd: 50000,
     nperAdd: 10,
-    rateAdd: 0.065,
     compoundingAdd: 1
   });
 
@@ -20,10 +20,11 @@ function Save() {
   }
 
   let pv = -PV(values.rate / values.compounding, values.nper * values.compounding, 0, values.fv);
-  let pmt = -PMT(values.rateAdd / values.compoundingAdd, values.nperAdd * values.compoundingAdd, -values.pvAdd, values.fvAdd) * values.compoundingAdd;
+  let pmt = -PMT(values.rate / values.compoundingAdd, values.nperAdd * values.compoundingAdd, -values.pvAdd, values.fvAdd) * values.compoundingAdd;
 
   return (
     <Container>
+      <h3 className="text-center">Savings Calculator</h3>
       <b>How much do I need to save/invest now to make a <u>certain goal</u> in the future assuming a <u>certain rate of return?</u></b>
       <Form>
         <Form.Group as={Row} className="mb-1" controlId="fv">
@@ -31,15 +32,15 @@ function Save() {
             Amount I need in the future (goal)
           </Form.Label>
           <Col sm={4}>
-            <Form.Control type="number" value={values.fv} onChange={changeHandler} />
+            <InputType type="dollar" value={values.fv} onChange={changeHandler} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="rate">
           <Form.Label column sm={8}>
-            Amount I expect to earn annually
+            Rate of return I expect to earn annually
           </Form.Label>
           <Col sm={4}>
-            <Form.Control type="number" step={.01} value={values.rate} onChange={changeHandler} />
+            <InputType type="percent" value={values.rate} onChange={changeHandler} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="nper">
@@ -68,14 +69,14 @@ function Save() {
         </Col>
       </Row>
       <hr/>
-      <b>What is the fixed amount I have to add each year in addition to the initial amount if I have a fixed interest rate estimate?</b>
+      <b>What is the fixed amount I have to add each year in addition to the initial amount if I have a fixed rate of return estimate?</b>
       <Form>
         <Form.Group as={Row} className="mb-1" controlId="pvAdd">
           <Form.Label column sm={8}>
             Amount I will invest now
           </Form.Label>
           <Col sm={4}>
-            <Form.Control type="number" value={values.pvAdd} onChange={changeHandler} />
+            <InputType type="dollar" value={values.pvAdd} onChange={changeHandler} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="fvAdd">
@@ -83,7 +84,7 @@ function Save() {
             Amount I need in the future
           </Form.Label>
           <Col sm={4}>
-            <Form.Control type="number" value={values.fvAdd} onChange={changeHandler} />
+            <InputType type="dollar" value={values.fvAdd} onChange={changeHandler} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="nperAdd">
@@ -96,10 +97,10 @@ function Save() {
         </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="rateAdd">
           <Form.Label column sm={8}>
-            Amount I expect to earn annually
+            Assumed rate of return (from above)
           </Form.Label>
           <Col sm={4}>
-            <Form.Control type="number" step={.01} value={values.rateAdd} onChange={changeHandler} />
+            <InputType disabled type="percent" value={values.rate} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-3" controlId="compounding">
@@ -113,7 +114,7 @@ function Save() {
       </Form>
       <Row>
         <Col sm={8}>
-          Additional amount needed to be deposited annually
+          Additional amount needed to be saved/invested annually
         </Col>
         <Col sm={4}>
           {currency(pmt)}

@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import { currency, percent, PMT, RATE } from "../utils";
+import InputType from "./InputType";
 
 function LoanCalculatorForm({ title, rate, points }) {
   const [values, setValues] = useState({
@@ -26,19 +27,19 @@ function LoanCalculatorForm({ title, rate, points }) {
             Loan Amount
           </Form.Label>
           <Col sm={4}>
-            <Form.Control type="number" value={values.loanAmount} onChange={changeHandler} />
+            <InputType type="dollar" value={values.loanAmount} onChange={changeHandler} />
           </Col>
         </Form.Group>
         {points ?
           <Form.Group as={Row} className="mb-1" controlId="points">
-            <Form.Label column sm={6}>
+            <Form.Label column sm={5}>
               Points
             </Form.Label>
-            <Col sm={2}>
-              <Form.Control type="number" step={.01} value={values.points} onChange={changeHandler} />
+            <Col sm={3}>
+              <InputType type="percent" value={values.points} onChange={changeHandler} />
             </Col>
             <Col sm={4}>
-              <Form.Control disabled value={values.points * values.loanAmount} />
+              <InputType type="dollar" value={values.points * values.loanAmount} onChange={changeHandler} />
             </Col>
           </Form.Group>
           : null
@@ -48,7 +49,7 @@ function LoanCalculatorForm({ title, rate, points }) {
             Interest Rate
           </Form.Label>
           <Col sm={4}>
-            <Form.Control type="number" step={.01} value={values.rate} onChange={changeHandler} />
+            <InputType type="percent" value={values.rate} onChange={changeHandler} />
           </Col>
         </Form.Group>
         {points ?
@@ -57,7 +58,8 @@ function LoanCalculatorForm({ title, rate, points }) {
               Rate With Points
             </Form.Label>
             <Col sm={4}>
-              <Form.Control disabled value={percent(RATE(values.term * values.pmtsPerYear, pmt, values.loanAmount * (values.points - 1)) * 12)} />
+              {/*<Form.Control disabled value={percent(RATE(values.term * values.pmtsPerYear, pmt, values.loanAmount * (values.points - 1)) * 12)} />*/}
+              <InputType disabled type="percent" value={(RATE(values.term * values.pmtsPerYear, pmt, values.loanAmount * (values.points - 1)) * 12 * 100).toFixed(2)} />
             </Col>
           </Form.Group>
           : null

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import { RATE, percent } from "../../utils";
+import InputType from "../../components/InputType";
 
 function Earn() {
   const [values, setValues] = useState({
@@ -24,14 +25,15 @@ function Earn() {
 
   return (
     <Container>
-      <b>How much will I have to earn if I save/invest now and want a certain amount in the future?</b>
+      <h3 className="text-center">Earnings Need Calculator</h3>
+      <b>How much will I have to earn on investments if I save/invest now and want a certain amount in the future?</b>
       <Form>
         <Form.Group as={Row} className="mb-1" controlId="pv">
           <Form.Label column sm={8}>
             Amount I will invest now
           </Form.Label>
           <Col sm={4}>
-            <Form.Control type="number" value={values.pv} onChange={changeHandler} />
+            <InputType type="dollar" value={values.pv} onChange={changeHandler} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="fv">
@@ -39,7 +41,7 @@ function Earn() {
             Amount I want in the future (goal)
           </Form.Label>
           <Col sm={4}>
-            <Form.Control type="number" value={values.fv} onChange={changeHandler} />
+            <InputType type="dollar" value={values.fv} onChange={changeHandler} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="nper">
@@ -61,21 +63,21 @@ function Earn() {
       </Form>
       <Row>
         <Col sm={8}>
-          What do I need to earn as a rate of return?
+          What do I need to earn as an average annual rate of return?
         </Col>
         <Col sm={4}>
           {percent(pv)}
         </Col>
       </Row>
       <hr/>
-      <b>How much will I have to earn if I also <u>add a fixed amount each year</u> in addition to the above info until I need the money?</b>
+      <b>How much will I have to earn on investments if I also <u>add a fixed amount each year</u> in addition to the above info until I need the money?</b>
       <Form>
         <Form.Group as={Row} className="mb-1" controlId="pvAdd">
           <Form.Label column sm={8}>
             Amount I will invest now
           </Form.Label>
           <Col sm={4}>
-            <Form.Control type="number" value={values.pvAdd} onChange={changeHandler} />
+            <InputType type="dollar" value={values.pvAdd} onChange={changeHandler} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="fvAdd">
@@ -83,7 +85,7 @@ function Earn() {
             Amount I want in the future (goal)
           </Form.Label>
           <Col sm={4}>
-            <Form.Control type="number" value={values.fvAdd} onChange={changeHandler} />
+            <InputType type="dollar" value={values.fvAdd} onChange={changeHandler} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="nperAdd">
@@ -99,7 +101,7 @@ function Earn() {
             Additional amount deposited annually
           </Form.Label>
           <Col sm={4}>
-            <Form.Control type="number" value={values.pmtAdd} onChange={changeHandler} />
+            <InputType type="dollar" value={values.pmtAdd} onChange={changeHandler} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-3" controlId="compoundingAdd">
@@ -113,7 +115,7 @@ function Earn() {
       </Form>
       <Row>
         <Col sm={8}>
-          What do I need to earn as a rate of return?
+          What do I need to earn as an average annual rate of return?
         </Col>
         <Col sm={4}>
           {percent(pvAdd)}

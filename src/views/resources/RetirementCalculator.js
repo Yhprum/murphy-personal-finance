@@ -1,6 +1,10 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Form, Table } from "react-bootstrap";
-import {FV, currency} from "../../utils";
+import {Container, Row, Col, Form, Table, InputGroup} from "react-bootstrap";
+import { FV, currency } from "../../utils";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+import Popover from "react-bootstrap/Popover";
+import InputType from "../../components/InputType";
 
 function RetirementCalculator() {
 
@@ -21,26 +25,47 @@ function RetirementCalculator() {
 
   const ages = [20, 25, 30, 35, 40, 45, 50, 55];
 
+  const popover = (
+    <Popover id="popover-basic">
+      <Popover.Header as="h3">Popover right</Popover.Header>
+      <Popover.Body>
+        And here's some <strong>amazing</strong> content. It's very engaging.
+        right?
+      </Popover.Body>
+    </Popover>
+  );
+
   return (
     <Container>
+      <h3 className="text-center">Retirement/Savings Calculator</h3>
+      <p>This calculator is intended to give you a snapshot of how your investment balances might grow over time based on starting and ending ages. As the inputs will likely change over the years, you can rerun them and see how you are progressing towards your goals. The output table will show the results based on your current age if you were to start saving now and will also show the results if you were to start later, using fixed five-year intervals.</p>
       <Row>
         <Col>
           Variables
           <Form>
             <Form.Group as={Row} className="mb-1" controlId="lumpSum">
               <Form.Label column sm={8}>
-                Lump Sum Invested Now
+                <OverlayTrigger
+                  placement={"right"}
+                  overlay={
+                    <Tooltip>
+                      Enter the amount you have already saved or invested as you start this calculation.
+                    </Tooltip>
+                  }
+                >
+                  <span style={{"textDecoration": "underline 0.5px gray dashed"}}>Lump Sum Invested Now</span>
+                </OverlayTrigger>
               </Form.Label>
               <Col sm={4}>
-                <Form.Control type="number" value={values.lumpSum} onChange={changeHandler} />
+                <InputType type="dollar" value={values.lumpSum} onChange={changeHandler} />
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="mb-1" controlId="rate">
               <Form.Label column sm={8}>
-                Invested Rate
+                Estimated Average Annual Investment Return %
               </Form.Label>
               <Col sm={4}>
-                <Form.Control type="number" step={.01} value={values.rate} onChange={changeHandler} />
+                <InputType type="percent" value={values.rate} onChange={changeHandler} />
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="mb-1" controlId="annualContributions">
@@ -48,12 +73,12 @@ function RetirementCalculator() {
                 Annual Contributions
               </Form.Label>
               <Col sm={4}>
-                <Form.Control type="number" value={values.annualContributions} onChange={changeHandler} />
+                <InputType type="dollar" value={values.annualContributions} onChange={changeHandler} />
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="mb-1" controlId="targetDrawAge">
               <Form.Label column sm={8}>
-                Target Retirement Age
+                Target Retirement/Goal Achievement Age
               </Form.Label>
               <Col sm={4}>
                 <Form.Control type="number" value={values.targetDrawAge} onChange={changeHandler} />
@@ -84,10 +109,10 @@ function RetirementCalculator() {
               <tr>
                 <th/>
                 <th>Starting Age</th>
-                <th>Results (Future Value)</th>
+                <th>Value at Age {values.targetDrawAge}</th>
                 <th>Amount Invested</th>
                 <th>
-                  Growth Past Retirement
+                  Value at{" "}
                   <select value={years} onChange={e => setYears(parseInt(e.target.value))}>
                     <option value={1}>1</option>
                     <option value={2}>2</option>
@@ -96,7 +121,7 @@ function RetirementCalculator() {
                     <option value={15}>15</option>
                     <option value={20}>20</option>
                   </select>
-                  yrs
+                  yrs Past Target Age
                 </th>
               </tr>
             </thead>

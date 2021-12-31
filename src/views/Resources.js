@@ -9,8 +9,8 @@ function Resources() {
       <Row className="resources">
         <Col lg={4} md={6}>
           <ResourcePreview
-            title="Retirement Calculator"
-            description="How much will I have saved in the future for retirement if I start now?"
+            title="Retirement/Savings Calculator"
+            description="How much will I have saved in the future for my retirement/goal if I start now?"
             path="retirement"
           />
         </Col>
@@ -24,14 +24,14 @@ function Resources() {
         <Col lg={4} md={6}>
           <ResourcePreview
             title="Savings Calculator"
-            description="How much do I need to save/invest now to make a certain goal in the future assuming a certain rate of return?"
+            description="How much do I need to save/invest  now to make a certain goal in the future assuming a certain rate of return?"
             path="save"
           />
         </Col>
         <Col lg={4} md={6}>
           <ResourcePreview
             title="Earnings Need Calculator"
-            description="How much will I have to earn if I save/invest now and want a certain amount in the future?"
+            description="How much will I have to earn on investments if I save/invest now and want a certain amount in the future?"
             path="earn"
           />
         </Col>

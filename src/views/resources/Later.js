@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import { FV, currency } from "../../utils";
+import InputType from "../../components/InputType";
 
 function Later() {
   const [values, setValues] = useState({
@@ -9,7 +10,6 @@ function Later() {
     nper: 10,
     compounding: 4,
     pvAdd: 20000,
-    rateAdd: .065,
     nperAdd: 10,
     pmtAdd: 1200,
     compoundingAdd: 12
@@ -20,10 +20,11 @@ function Later() {
   }
 
   let fv = FV(values.rate / values.compounding, values.nper * values.compounding, 0, -values.pv);
-  let fvAdd = FV(values.rateAdd / values.compoundingAdd, values.nperAdd * values.compoundingAdd, -values.pmtAdd / values.compoundingAdd, -values.pvAdd);
+  let fvAdd = FV(values.rate / values.compoundingAdd, values.nperAdd * values.compoundingAdd, -values.pmtAdd / values.compoundingAdd, -values.pvAdd);
 
   return (
     <Container>
+      <h3 className="text-center">Future Value Calculator</h3>
       <b>How much will I have in the future if I save/invest a certain amount now and earn a certain interest/income rate?</b>
       <Form>
         <Form.Group as={Row} className="mb-1" controlId="pv">
@@ -31,15 +32,15 @@ function Later() {
             Amount I will invest now
           </Form.Label>
           <Col sm={4}>
-            <Form.Control type="number" value={values.pv} onChange={changeHandler} />
+            <InputType type="dollar" value={values.pv} onChange={changeHandler} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="rate">
           <Form.Label column sm={8}>
-            Amount I expect to earn annually
+            Return I expect to earn annually on invested amount (%)
           </Form.Label>
           <Col sm={4}>
-            <Form.Control type="number" step={.01} value={values.rate} onChange={changeHandler} />
+            <InputType type="percent" value={values.rate} onChange={changeHandler} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="nper">
@@ -75,15 +76,23 @@ function Later() {
             Amount I will invest now
           </Form.Label>
           <Col sm={4}>
-            <Form.Control type="number" value={values.pvAdd} onChange={changeHandler} />
+            <InputType type="dollar" value={values.pvAdd} onChange={changeHandler} />
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} className="mb-1" controlId="pmtAdd">
+          <Form.Label column sm={8}>
+            Additional amount deposited annually
+          </Form.Label>
+          <Col sm={4}>
+            <InputType type="dollar" value={values.pmtAdd} onChange={changeHandler} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="rateAdd">
           <Form.Label column sm={8}>
-            Amount I expect to earn annually
+            Assumed rate of return (from above)
           </Form.Label>
           <Col sm={4}>
-            <Form.Control type="number" step={.01} value={values.rateAdd} onChange={changeHandler} />
+            <InputType disabled type="percent" value={values.rate} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="nperAdd">
@@ -92,14 +101,6 @@ function Later() {
           </Form.Label>
           <Col sm={4}>
             <Form.Control type="number" value={values.nperAdd} onChange={changeHandler} />
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row} className="mb-1" controlId="pmtAdd">
-          <Form.Label column sm={8}>
-            Additional amount deposited annually
-          </Form.Label>
-          <Col sm={4}>
-            <Form.Control type="number" value={values.pmtAdd} onChange={changeHandler} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-3" controlId="compoundingAdd">
