@@ -6,7 +6,7 @@ import InputType from "../../components/InputType";
 function Later() {
   const [values, setValues] = useState({
     pv: 20000,
-    rate: .065,
+    rate: 6.5,
     nper: 10,
     compounding: 4,
     pvAdd: 20000,
@@ -19,8 +19,8 @@ function Later() {
     setValues({...values, [e.target.id]: parseFloat(e.target.value)})
   }
 
-  let fv = FV(values.rate / values.compounding, values.nper * values.compounding, 0, -values.pv);
-  let fvAdd = FV(values.rate / values.compoundingAdd, values.nperAdd * values.compoundingAdd, -values.pmtAdd / values.compoundingAdd, -values.pvAdd);
+  let fv = FV(values.rate  / 100/ values.compounding, values.nper * values.compounding, 0, -values.pv);
+  let fvAdd = FV(values.rate / 100 / values.compoundingAdd, values.nperAdd * values.compoundingAdd, -values.pmtAdd / values.compoundingAdd, -values.pvAdd);
 
   return (
     <Container>

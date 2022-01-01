@@ -1,12 +1,12 @@
 import React, { Fragment, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
-import { currency, percent, PMT, RATE } from "../utils";
+import { currency, PMT, RATE } from "../utils";
 import InputType from "./InputType";
 
 function LoanCalculatorForm({ title, rate, points }) {
   const [values, setValues] = useState({
     loanAmount: 350000,
-    rate: rate ?? 0.03,
+    rate: rate ?? 3,
     term: 30,
     pmtsPerYear: 12,
     points: points ?? 0.01
@@ -16,7 +16,7 @@ function LoanCalculatorForm({ title, rate, points }) {
     setValues({...values, [e.target.id]: parseFloat(e.target.value)})
   }
 
-  let pmt = PMT(values.rate / values.pmtsPerYear, values.term * values.pmtsPerYear, values.loanAmount * -1);
+  let pmt = PMT(values.rate / 100 / values.pmtsPerYear, values.term * values.pmtsPerYear, values.loanAmount * -1);
 
   return (
     <Fragment>
@@ -58,8 +58,7 @@ function LoanCalculatorForm({ title, rate, points }) {
               Rate With Points
             </Form.Label>
             <Col sm={4}>
-              {/*<Form.Control disabled value={percent(RATE(values.term * values.pmtsPerYear, pmt, values.loanAmount * (values.points - 1)) * 12)} />*/}
-              <InputType disabled type="percent" value={(RATE(values.term * values.pmtsPerYear, pmt, values.loanAmount * (values.points - 1)) * 12 * 100).toFixed(2)} />
+              <InputType disabled type="percent" value={RATE(values.term * values.pmtsPerYear, pmt, values.loanAmount * (values.points - 1)) * 12 * 100} />
             </Col>
           </Form.Group>
           : null

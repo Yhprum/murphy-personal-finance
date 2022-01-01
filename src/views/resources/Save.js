@@ -6,7 +6,7 @@ import InputType from "../../components/InputType";
 function Save() {
   const [values, setValues] = useState({
     fv: 50000,
-    rate: 0.065,
+    rate: 6.5,
     nper: 10,
     compounding: 1,
     pvAdd: 20000,
@@ -19,8 +19,8 @@ function Save() {
     setValues({...values, [e.target.id]: parseFloat(e.target.value)})
   }
 
-  let pv = -PV(values.rate / values.compounding, values.nper * values.compounding, 0, values.fv);
-  let pmt = -PMT(values.rate / values.compoundingAdd, values.nperAdd * values.compoundingAdd, -values.pvAdd, values.fvAdd) * values.compoundingAdd;
+  let pv = -PV(values.rate / 100 / values.compounding, values.nper * values.compounding, 0, values.fv);
+  let pmt = -PMT(values.rate / 100 / values.compoundingAdd, values.nperAdd * values.compoundingAdd, -values.pvAdd, values.fvAdd) * values.compoundingAdd;
 
   return (
     <Container>

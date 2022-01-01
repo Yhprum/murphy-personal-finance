@@ -1,39 +1,23 @@
 import React, { useState } from "react";
-import {Container, Row, Col, Form, Table, InputGroup} from "react-bootstrap";
+import { Container, Row, Col, Form, Table, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FV, currency } from "../../utils";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
-import Popover from "react-bootstrap/Popover";
 import InputType from "../../components/InputType";
 
 function RetirementCalculator() {
 
   const [values, setValues] = useState({
     lumpSum: 5000,
-    rate: 0.08,
+    rate: 8,
     annualContributions: 2400,
     targetDrawAge: 66,
     compounding: 1,
     age: 21
   });
-
   const [years, setYears] = useState(5);
-
+  const ages = [20, 25, 30, 35, 40, 45, 50, 55];
   const changeHandler = e => {
     setValues({...values, [e.target.id]: parseFloat(e.target.value)})
   }
-
-  const ages = [20, 25, 30, 35, 40, 45, 50, 55];
-
-  const popover = (
-    <Popover id="popover-basic">
-      <Popover.Header as="h3">Popover right</Popover.Header>
-      <Popover.Body>
-        And here's some <strong>amazing</strong> content. It's very engaging.
-        right?
-      </Popover.Body>
-    </Popover>
-  );
 
   return (
     <Container>
@@ -128,6 +112,7 @@ function RetirementCalculator() {
             <tbody>
             {[values.age, ...ages.filter(age => age > values.age)].map(age => {
               let { lumpSum, rate, annualContributions, targetDrawAge, compounding } = values;
+              rate = rate / 100;
               let nper = (targetDrawAge - age) * compounding;
               let fv = FV(rate / compounding, nper, annualContributions / compounding * -1, lumpSum * -1);
               let amt = parseFloat(lumpSum) + annualContributions * (targetDrawAge - age);

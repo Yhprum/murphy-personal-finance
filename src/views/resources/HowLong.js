@@ -7,7 +7,7 @@ function HowLong() {
   const [values, setValues] = useState({
     fv: 50000,
     pv: 20000,
-    rate: .065,
+    rate: 6.5,
     pmt: 0,
     compounding: 4
   });
@@ -16,7 +16,7 @@ function HowLong() {
     setValues({...values, [e.target.id]: parseFloat(e.target.value)})
   }
 
-  let nper = NPER(values.rate / values.compounding, -values.pmt / values.compounding, -values.pv, values.fv) / values.compounding;
+  let nper = NPER(values.rate / 100 / values.compounding, -values.pmt / values.compounding, -values.pv, values.fv) / values.compounding;
 
   return (
     <Container>

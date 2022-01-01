@@ -12,9 +12,9 @@ function LoanCalculator() {
         <Col lg={6}>
           <LoanCalculatorForm title="Loan A - A Basic Monthly Loan/Mortgage Calculator (PMT fct) - No Points" />
           <hr/>
-          <LoanCalculatorForm title="Loan B - A Basic Monthly Loan/Mortgage Comparison w/Points (PMT & RATE fct)" rate={.0275} points={.01} />
+          <LoanCalculatorForm title="Loan B - A Basic Monthly Loan/Mortgage Comparison w/Points (PMT & RATE fct)" rate={2.75} points={.01} />
           <hr/>
-          <LoanCalculatorForm title="Loan C - A Basic Monthly Loan/Mortgage Comparison w/Points (PMT & RATE fct)" rate={.025} points={.02} />
+          <LoanCalculatorForm title="Loan C - A Basic Monthly Loan/Mortgage Comparison w/Points (PMT & RATE fct)" rate={2.5} points={.02} />
           <hr/>
           {[...Array(comparisons)].map((_, i) =>
             <Fragment key={i}>
