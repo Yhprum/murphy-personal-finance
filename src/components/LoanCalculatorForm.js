@@ -93,9 +93,6 @@ function LoanCalculatorForm({ title, rate, points, letter, pmtNoPoints, setPmt }
       </Col>
       {points ?
         <Col lg={6}>
-          <b>Simple Points breakeven analysis (ignoring time value of money)</b>
-          <br/>If you think you won't hold the loan past the breakeven time period, take the loan with the higher
-          interest rate and no points.
           <table>
             <thead>
             <tr>
@@ -114,7 +111,12 @@ function LoanCalculatorForm({ title, rate, points, letter, pmtNoPoints, setPmt }
             </tbody>
           </table>
         </Col>
-        : null
+        :
+        <Col lg={6}>
+          <b>Simple Points breakeven analysis (ignoring time value of money)</b>
+          <br/>If you think you won't hold the loan past the breakeven time period, take the loan with the higher
+          interest rate and no points.
+        </Col>
       }
     </Row>
   );
