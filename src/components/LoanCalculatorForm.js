@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import { currency, PMT, RATE } from "../utils";
 import InputType from "./InputType";
