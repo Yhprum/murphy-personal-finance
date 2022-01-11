@@ -18,3 +18,7 @@
   margin: .5rem;
   width: 80%;
 }
+
+.tooltip-inner {
+  max-width: 500px;
+}

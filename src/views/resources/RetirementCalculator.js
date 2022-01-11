@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Form, Table, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { useState } from "react";
+import { Container, Row, Col, Form, Table } from "react-bootstrap";
 import { FV, currency } from "../../utils";
 import InputType from "../../components/InputType";
+import HelpText from "../../components/HelpText";
+import {ageText, compoundingText, lumpSumText, pmtText, rateText, targetAgeText} from "../../assets/text/tooltips";
 
 function RetirementCalculator() {
 
@@ -25,20 +27,11 @@ function RetirementCalculator() {
       <p>This calculator is intended to give you a snapshot of how your investment balances might grow over time based on starting and ending ages. As the inputs will likely change over the years, you can rerun them and see how you are progressing towards your goals. The output table will show the results based on your current age if you were to start saving now and will also show the results if you were to start later, using fixed five-year intervals.</p>
       <Row>
         <Col>
-          Variables
+          <h5>Variables</h5>
           <Form>
             <Form.Group as={Row} className="mb-1" controlId="lumpSum">
               <Form.Label column sm={8}>
-                <OverlayTrigger
-                  placement={"right"}
-                  overlay={
-                    <Tooltip>
-                      Enter the amount you have already saved or invested as you start this calculation.
-                    </Tooltip>
-                  }
-                >
-                  <span style={{"textDecoration": "underline 0.5px gray dashed"}}>Lump Sum Invested Now</span>
-                </OverlayTrigger>
+                <HelpText text="Lump Sum Invested Now" tooltip={lumpSumText} />
               </Form.Label>
               <Col sm={4}>
                 <InputType type="dollar" value={values.lumpSum} onChange={changeHandler} />
@@ -46,7 +39,7 @@ function RetirementCalculator() {
             </Form.Group>
             <Form.Group as={Row} className="mb-1" controlId="rate">
               <Form.Label column sm={8}>
-                Estimated Average Annual Investment Return %
+                <HelpText text="Estimated Average Annual Investment Return %" tooltip={rateText} />
               </Form.Label>
               <Col sm={4}>
                 <InputType type="percent" value={values.rate} onChange={changeHandler} />
@@ -54,7 +47,7 @@ function RetirementCalculator() {
             </Form.Group>
             <Form.Group as={Row} className="mb-1" controlId="annualContributions">
               <Form.Label column sm={8}>
-                Annual Contributions
+                <HelpText text="Annual Contributions" tooltip={pmtText} />
               </Form.Label>
               <Col sm={4}>
                 <InputType type="dollar" value={values.annualContributions} onChange={changeHandler} />
@@ -62,7 +55,7 @@ function RetirementCalculator() {
             </Form.Group>
             <Form.Group as={Row} className="mb-1" controlId="targetDrawAge">
               <Form.Label column sm={8}>
-                Target Retirement/Goal Achievement Age
+                <HelpText text="Target Retirement/Goal Achievement Age" tooltip={targetAgeText} />
               </Form.Label>
               <Col sm={4}>
                 <Form.Control type="number" value={values.targetDrawAge} onChange={changeHandler} />
@@ -70,7 +63,7 @@ function RetirementCalculator() {
             </Form.Group>
             <Form.Group as={Row} className="mb-1" controlId="age">
               <Form.Label column sm={8}>
-                Your Age
+                <HelpText text="Your Age" tooltip={ageText} />
               </Form.Label>
               <Col sm={4}>
                 <Form.Control type="number" value={values.age} onChange={changeHandler} />
@@ -78,7 +71,7 @@ function RetirementCalculator() {
             </Form.Group>
             <Form.Group as={Row} className="mb-1" controlId="compounding">
               <Form.Label column sm={8}>
-                Compounding
+                <HelpText text="Compounding" tooltip={compoundingText} />
               </Form.Label>
               <Col sm={4}>
                 <Form.Control type="number" min={1} max={365} value={values.compounding} onChange={changeHandler} />
@@ -87,7 +80,7 @@ function RetirementCalculator() {
           </Form>
         </Col>
         <Col>
-          results
+          <h5>Results</h5>
           <Table>
             <thead>
               <tr>

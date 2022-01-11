@@ -8,7 +8,7 @@ function InputType({ type, value, onChange, disabled }) {
         disabled={disabled}
         type="number"
         step={type === "percent" ? 0.1 : 1}
-        value={type === "percent" ? value.toFixed(2) : value}
+        value={type === "percent" ? +value.toFixed(2) : +value.toFixed(2)}
         onChange={onChange}
       />
       {type === "percent" ? <InputGroup.Text>%</InputGroup.Text> : null}
