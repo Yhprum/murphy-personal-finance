@@ -4,3 +4,9 @@ export const pmtText = "Enter the amount you plan to set aside annually - this m
 export const targetAgeText = "Enter the age at which you expect to stop building savings and perhaps begin to draw down (retirement age, savings goal date etc).";
 export const ageText = "Enter current age here (or age at which you will plan to start saving/ investing, if not now).";
 export const compoundingText = "Enter the # of periods you would expect your invested amounts to compound at the Invested Rate (1-365; where 1 = compounded annually, 12 = compounded monthly, 365 – compounded daily). Lower # are more conservative. If uncertain, use 1 or 2.";
+
+// Loan Calculator
+export const loanAmountText = "Enter the principal amount of the loan (include points/documentation costs IF they are rolled into your loan and not paid up-front).";
+export const interestRateText = "Enter the annual interest rate (not the APR) on the loan. The APR will include other associated loan costs that are usually paid up-front (documentation, points, e.g.).";
+export const termText = "Enter the term (number of years) of the loan.";
+export const pmtsPerYearText = "Enter # of payments per year (e.g., enter 12 if payments are made monthly).";

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import { RATE, percent } from "../../utils";
 import InputType from "../../components/InputType";
+import HelpText from "../../components/HelpText";
+import { compoundingText, lumpSumText, pmtText } from "../../assets/text/tooltips";
 
 function Earn() {
   const [values, setValues] = useState({
@@ -16,9 +18,7 @@ function Earn() {
     compoundingAdd: 1
   });
 
-  const changeHandler = e => {
-    setValues({...values, [e.target.id]: parseFloat(e.target.value)})
-  }
+  const changeHandler = e => setValues({...values, [e.target.id]: parseFloat(e.target.value)});
 
   let pv = RATE(values.nper * values.compounding, 0, -values.pv, values.fv) * values.compounding;
   let pvAdd = RATE(values.nperAdd * values.compoundingAdd, -values.pmtAdd / values.compoundingAdd, -values.pvAdd, values.fvAdd) * values.compoundingAdd;
@@ -30,7 +30,7 @@ function Earn() {
       <Form>
         <Form.Group as={Row} className="mb-1" controlId="pv">
           <Form.Label column sm={8}>
-            Amount I will invest now
+            <HelpText text="Amount I will invest now" tooltip={lumpSumText} />
           </Form.Label>
           <Col sm={4}>
             <InputType type="dollar" value={values.pv} onChange={changeHandler} />
@@ -54,7 +54,7 @@ function Earn() {
         </Form.Group>
         <Form.Group as={Row} className="mb-3" controlId="compounding">
           <Form.Label column sm={8}>
-            Interest payment/compounding periods per year
+            <HelpText text="Interest payment/compounding periods per year" tooltip={compoundingText} />
           </Form.Label>
           <Col sm={4}>
             <Form.Control type="number" value={values.compounding} onChange={changeHandler} />
@@ -74,7 +74,7 @@ function Earn() {
       <Form>
         <Form.Group as={Row} className="mb-1" controlId="pvAdd">
           <Form.Label column sm={8}>
-            Amount I will invest now
+            <HelpText text="Amount I will invest now" tooltip={lumpSumText} />
           </Form.Label>
           <Col sm={4}>
             <InputType type="dollar" value={values.pvAdd} onChange={changeHandler} />
@@ -98,7 +98,7 @@ function Earn() {
         </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="pmtAdd">
           <Form.Label column sm={8}>
-            Additional amount deposited annually
+            <HelpText text="Additional amount deposited annually" tooltip={pmtText} />
           </Form.Label>
           <Col sm={4}>
             <InputType type="dollar" value={values.pmtAdd} onChange={changeHandler} />
@@ -106,7 +106,7 @@ function Earn() {
         </Form.Group>
         <Form.Group as={Row} className="mb-3" controlId="compoundingAdd">
           <Form.Label column sm={8}>
-            Interest payment/compounding periods per year
+            <HelpText text="Interest payment/compounding periods per year" tooltip={compoundingText} />
           </Form.Label>
           <Col sm={4}>
             <Form.Control type="number" value={values.compoundingAdd} onChange={changeHandler} />

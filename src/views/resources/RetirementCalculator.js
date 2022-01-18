@@ -3,7 +3,7 @@ import { Container, Row, Col, Form, Table } from "react-bootstrap";
 import { FV, currency } from "../../utils";
 import InputType from "../../components/InputType";
 import HelpText from "../../components/HelpText";
-import {ageText, compoundingText, lumpSumText, pmtText, rateText, targetAgeText} from "../../assets/text/tooltips";
+import { ageText, compoundingText, lumpSumText, pmtText, rateText, targetAgeText } from "../../assets/text/tooltips";
 
 function RetirementCalculator() {
 
@@ -17,9 +17,7 @@ function RetirementCalculator() {
   });
   const [years, setYears] = useState(5);
   const ages = [20, 25, 30, 35, 40, 45, 50, 55];
-  const changeHandler = e => {
-    setValues({...values, [e.target.id]: parseFloat(e.target.value)})
-  }
+  const changeHandler = e => setValues({...values, [e.target.id]: parseFloat(e.target.value)});
 
   return (
     <Container>

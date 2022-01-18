@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import { currency, PV, PMT } from "../../utils";
 import InputType from "../../components/InputType";
+import HelpText from "../../components/HelpText";
+import { compoundingText, lumpSumText, rateText } from "../../assets/text/tooltips";
 
 function Save() {
   const [values, setValues] = useState({
@@ -15,9 +17,7 @@ function Save() {
     compoundingAdd: 1
   });
 
-  const changeHandler = e => {
-    setValues({...values, [e.target.id]: parseFloat(e.target.value)})
-  }
+  const changeHandler = e => setValues({...values, [e.target.id]: parseFloat(e.target.value)});
 
   let pv = -PV(values.rate / 100 / values.compounding, values.nper * values.compounding, 0, values.fv);
   let pmt = -PMT(values.rate / 100 / values.compoundingAdd, values.nperAdd * values.compoundingAdd, -values.pvAdd, values.fvAdd) * values.compoundingAdd;
@@ -37,7 +37,7 @@ function Save() {
         </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="rate">
           <Form.Label column sm={8}>
-            Rate of return I expect to earn annually
+            <HelpText text="Rate of return I expect to earn annually" tooltip={rateText} />
           </Form.Label>
           <Col sm={4}>
             <InputType type="percent" value={values.rate} onChange={changeHandler} />
@@ -53,7 +53,7 @@ function Save() {
         </Form.Group>
         <Form.Group as={Row} className="mb-3" controlId="compounding">
           <Form.Label column sm={8}>
-            Interest payment/compounding periods per year
+            <HelpText text="Interest payment/compounding periods per year" tooltip={compoundingText} />
           </Form.Label>
           <Col sm={4}>
             <Form.Control type="number" value={values.compounding} onChange={changeHandler} />
@@ -73,7 +73,7 @@ function Save() {
       <Form>
         <Form.Group as={Row} className="mb-1" controlId="pvAdd">
           <Form.Label column sm={8}>
-            Amount I will invest now
+            <HelpText text="Amount I will invest now" tooltip={lumpSumText} />
           </Form.Label>
           <Col sm={4}>
             <InputType type="dollar" value={values.pvAdd} onChange={changeHandler} />
@@ -103,12 +103,12 @@ function Save() {
             <InputType disabled type="percent" value={values.rate} />
           </Col>
         </Form.Group>
-        <Form.Group as={Row} className="mb-3" controlId="compounding">
+        <Form.Group as={Row} className="mb-3" controlId="compoundingAdd">
           <Form.Label column sm={8}>
-            Interest payment/compounding periods per year
+            <HelpText text="Interest payment/compounding periods per year" tooltip={compoundingText} />
           </Form.Label>
           <Col sm={4}>
-            <Form.Control type="number" value={values.compounding} onChange={changeHandler} />
+            <Form.Control type="number" value={values.compoundingAdd} onChange={changeHandler} />
           </Col>
         </Form.Group>
       </Form>

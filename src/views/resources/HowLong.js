@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import { NPER } from "../../utils";
 import InputType from "../../components/InputType";
+import HelpText from "../../components/HelpText";
+import {compoundingText, lumpSumText, pmtText, rateText} from "../../assets/text/tooltips";
 
 function HowLong() {
   const [values, setValues] = useState({
@@ -12,9 +14,7 @@ function HowLong() {
     compounding: 4
   });
 
-  const changeHandler = e => {
-    setValues({...values, [e.target.id]: parseFloat(e.target.value)})
-  }
+  const changeHandler = e => setValues({...values, [e.target.id]: parseFloat(e.target.value)});
 
   let nper = NPER(values.rate / 100 / values.compounding, -values.pmt / values.compounding, -values.pv, values.fv) / values.compounding;
 
@@ -33,7 +33,7 @@ function HowLong() {
         </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="pv">
           <Form.Label column sm={8}>
-            Amount I will invest now
+            <HelpText text="Amount I will invest now" tooltip={lumpSumText} />
           </Form.Label>
           <Col sm={4}>
             <InputType type="dollar" value={values.pv} onChange={changeHandler} />
@@ -41,7 +41,7 @@ function HowLong() {
         </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="rate">
           <Form.Label column sm={8}>
-            Return I expect to earn annually on invested amount (%)
+            <HelpText text="Return I expect to earn annually on invested amount (%)" tooltip={rateText} />
           </Form.Label>
           <Col sm={4}>
             <InputType type="percent" value={values.rate} onChange={changeHandler} />
@@ -49,7 +49,7 @@ function HowLong() {
         </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="pmt">
           <Form.Label column sm={8}>
-            Additional amount deposited annually
+            <HelpText text="Additional amount deposited annually" tooltip={pmtText} />
           </Form.Label>
           <Col sm={4}>
             <InputType type="dollar" value={values.pmt} onChange={changeHandler} />
@@ -57,7 +57,7 @@ function HowLong() {
         </Form.Group>
         <Form.Group as={Row} className="mb-3" controlId="compounding">
           <Form.Label column sm={8}>
-            Interest payment/compounding periods per year
+            <HelpText text="Interest payment/compounding periods per year" tooltip={compoundingText} />
           </Form.Label>
           <Col sm={4}>
             <Form.Control type="number" value={values.compounding} onChange={changeHandler} />

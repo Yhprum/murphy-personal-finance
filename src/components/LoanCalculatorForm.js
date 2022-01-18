@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import { currency, PMT, RATE } from "../utils";
 import InputType from "./InputType";
+import HelpText from "./HelpText";
+import { interestRateText, loanAmountText, pmtsPerYearText, termText } from "../assets/text/tooltips";
 
 function LoanCalculatorForm({ title, rate, points, letter, pmtNoPoints, setPmt }) {
   const [values, setValues] = useState({
@@ -12,9 +14,7 @@ function LoanCalculatorForm({ title, rate, points, letter, pmtNoPoints, setPmt }
     points: points ?? 1
   });
 
-  const changeHandler = e => {
-    setValues({...values, [e.target.id]: parseFloat(e.target.value)})
-  }
+  const changeHandler = e => setValues({...values, [e.target.id]: parseFloat(e.target.value)});
 
   let pmt = PMT(values.rate / 100 / values.pmtsPerYear, values.term * values.pmtsPerYear, values.loanAmount * -1);
   if (!points) setPmt(pmt);
@@ -26,7 +26,7 @@ function LoanCalculatorForm({ title, rate, points, letter, pmtNoPoints, setPmt }
         <Form>
           <Form.Group as={Row} className="mb-1" controlId="loanAmount">
             <Form.Label column sm={8}>
-              Loan Amount
+              <HelpText text="Loan Amount" tooltip={loanAmountText} />
             </Form.Label>
             <Col sm={4}>
               <InputType type="dollar" value={values.loanAmount} onChange={changeHandler} />
@@ -48,7 +48,7 @@ function LoanCalculatorForm({ title, rate, points, letter, pmtNoPoints, setPmt }
           }
           <Form.Group as={Row} className="mb-1" controlId="rate">
             <Form.Label column sm={8}>
-              Interest Rate
+              <HelpText text="Interest Rate" tooltip={interestRateText} />
             </Form.Label>
             <Col sm={4}>
               <InputType type="percent" value={values.rate} onChange={changeHandler} />
@@ -67,7 +67,7 @@ function LoanCalculatorForm({ title, rate, points, letter, pmtNoPoints, setPmt }
           }
           <Form.Group as={Row} className="mb-1" controlId="term">
             <Form.Label column sm={8}>
-              Term
+              <HelpText text="Term" tooltip={termText} />
             </Form.Label>
             <Col sm={4}>
               <Form.Control type="number" value={values.term} onChange={changeHandler} />
@@ -75,7 +75,7 @@ function LoanCalculatorForm({ title, rate, points, letter, pmtNoPoints, setPmt }
           </Form.Group>
           <Form.Group as={Row} className="mb-3" controlId="pmtsPerYear">
             <Form.Label column sm={8}>
-              Payments Per Year
+              <HelpText text="Payments Per Year" tooltip={pmtsPerYearText} />
             </Form.Label>
             <Col sm={4}>
               <Form.Control type="number" value={values.pmtsPerYear} onChange={changeHandler} />
