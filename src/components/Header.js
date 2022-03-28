@@ -6,7 +6,7 @@ function Header() {
   return (
     <Navbar bg="light" expand="md" className="mb-3">
       <Container>
-        <Navbar.Brand href="/">KEM Investing</Navbar.Brand>
+        <Navbar.Brand href="/">KEM Personal Finance</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
