@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./views/Home";
 import Resources from "./views/Resources";
@@ -13,7 +13,7 @@ import HowLong from "./views/resources/HowLong";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -25,7 +25,7 @@ function App() {
         <Route path="/resources/later" element={<Later />} />
         <Route path="/resources/howlong" element={<HowLong />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
