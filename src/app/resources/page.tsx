@@ -1,6 +1,5 @@
 "use client";
 import { Container, Row, Col } from "react-bootstrap";
-import "@/assets/css/resources.css";
 import ResourcePreview from "@/components/ResourcePreview";
 
 export default function Resources() {
