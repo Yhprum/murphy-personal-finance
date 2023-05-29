@@ -1,22 +1,24 @@
-import React, { useState } from "react";
+"use client";
+import { useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
-import { NPER } from "../../utils";
-import InputType from "../../components/InputType";
-import HelpText from "../../components/HelpText";
-import {compoundingText, lumpSumText, pmtText, rateText} from "../../assets/text/tooltips";
+import { NPER } from "@/lib/utils";
+import InputType from "@/components/InputType";
+import HelpText from "@/components/HelpText";
+import { compoundingText, lumpSumText, pmtText, rateText } from "@/assets/text/tooltips";
 
-function HowLong() {
+export default function HowLong() {
   const [values, setValues] = useState({
     fv: 50000,
     pv: 20000,
     rate: 6.5,
     pmt: 0,
-    compounding: 4
+    compounding: 4,
   });
 
-  const changeHandler = e => setValues({...values, [e.target.id]: parseFloat(e.target.value)});
+  const changeHandler = (e: any) => setValues({ ...values, [e.target.id]: parseFloat(e.target.value) });
 
-  let nper = NPER(values.rate / 100 / values.compounding, -values.pmt / values.compounding, -values.pv, values.fv) / values.compounding;
+  const nper =
+    NPER(values.rate / 100 / values.compounding, -values.pmt / values.compounding, -values.pv, values.fv) ?? 0 / values.compounding;
 
   return (
     <Container>
@@ -65,15 +67,9 @@ function HowLong() {
         </Form.Group>
       </Form>
       <Row>
-        <Col sm={8}>
-          How long will it take?
-        </Col>
-        <Col sm={4}>
-          {nper.toFixed(1)} years
-        </Col>
+        <Col sm={8}>How long will it take?</Col>
+        <Col sm={4}>{nper.toFixed(1)} years</Col>
       </Row>
     </Container>
   );
 }
-
-export default HowLong;

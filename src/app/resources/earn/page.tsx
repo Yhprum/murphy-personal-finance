@@ -1,46 +1,50 @@
-import React, { useState } from "react";
+"use client";
+import { useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
-import { currency, PV, PMT } from "../../utils";
-import InputType from "../../components/InputType";
-import HelpText from "../../components/HelpText";
-import { compoundingText, lumpSumText, rateText } from "../../assets/text/tooltips";
+import { RATE, percent } from "@/lib/utils";
+import InputType from "@/components/InputType";
+import HelpText from "@/components/HelpText";
+import { compoundingText, lumpSumText, pmtText } from "@/assets/text/tooltips";
 
-function Save() {
+export default function Earn() {
   const [values, setValues] = useState({
+    pv: 20000,
     fv: 50000,
-    rate: 6.5,
     nper: 10,
     compounding: 1,
     pvAdd: 20000,
     fvAdd: 50000,
     nperAdd: 10,
-    compoundingAdd: 1
+    pmtAdd: 1000,
+    compoundingAdd: 1,
   });
 
-  const changeHandler = e => setValues({...values, [e.target.id]: parseFloat(e.target.value)});
+  const changeHandler = (e: any) => setValues({ ...values, [e.target.id]: parseFloat(e.target.value) });
 
-  let pv = -PV(values.rate / 100 / values.compounding, values.nper * values.compounding, 0, values.fv);
-  let pmt = -PMT(values.rate / 100 / values.compoundingAdd, values.nperAdd * values.compoundingAdd, -values.pvAdd, values.fvAdd) * values.compoundingAdd;
+  let pv = RATE(values.nper * values.compounding, 0, -values.pv, values.fv) * values.compounding;
+  let pvAdd =
+    RATE(values.nperAdd * values.compoundingAdd, -values.pmtAdd / values.compoundingAdd, -values.pvAdd, values.fvAdd) *
+    values.compoundingAdd;
 
   return (
     <Container>
-      <h3 className="text-center">Savings Calculator</h3>
-      <b>How much do I need to save/invest now to make a <u>certain goal</u> in the future assuming a <u>certain rate of return?</u></b>
+      <h3 className="text-center">Earnings Need Calculator</h3>
+      <b>How much will I have to earn on investments if I save/invest now and want a certain amount in the future?</b>
       <Form>
+        <Form.Group as={Row} className="mb-1" controlId="pv">
+          <Form.Label column sm={8}>
+            <HelpText text="Amount I will invest now" tooltip={lumpSumText} />
+          </Form.Label>
+          <Col sm={4}>
+            <InputType type="dollar" value={values.pv} onChange={changeHandler} />
+          </Col>
+        </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="fv">
           <Form.Label column sm={8}>
-            Amount I need in the future (goal)
+            Amount I want in the future (goal)
           </Form.Label>
           <Col sm={4}>
             <InputType type="dollar" value={values.fv} onChange={changeHandler} />
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row} className="mb-1" controlId="rate">
-          <Form.Label column sm={8}>
-            <HelpText text="Rate of return I expect to earn annually" tooltip={rateText} />
-          </Form.Label>
-          <Col sm={4}>
-            <InputType type="percent" value={values.rate} onChange={changeHandler} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="nper">
@@ -61,15 +65,14 @@ function Save() {
         </Form.Group>
       </Form>
       <Row>
-        <Col sm={8}>
-          How much do I need to invest now?
-        </Col>
-        <Col sm={4}>
-          {currency(pv)}
-        </Col>
+        <Col sm={8}>What do I need to earn as an average annual rate of return?</Col>
+        <Col sm={4}>{percent(pv)}</Col>
       </Row>
-      <hr/>
-      <b>What is the fixed amount I have to add each year in addition to the initial amount if I have a fixed rate of return estimate?</b>
+      <hr />
+      <b>
+        How much will I have to earn on investments if I also <u>add a fixed amount each year</u> in addition to the above info until I need
+        the money?
+      </b>
       <Form>
         <Form.Group as={Row} className="mb-1" controlId="pvAdd">
           <Form.Label column sm={8}>
@@ -81,7 +84,7 @@ function Save() {
         </Form.Group>
         <Form.Group as={Row} className="mb-1" controlId="fvAdd">
           <Form.Label column sm={8}>
-            Amount I need in the future
+            Amount I want in the future (goal)
           </Form.Label>
           <Col sm={4}>
             <InputType type="dollar" value={values.fvAdd} onChange={changeHandler} />
@@ -95,12 +98,12 @@ function Save() {
             <Form.Control type="number" value={values.nperAdd} onChange={changeHandler} />
           </Col>
         </Form.Group>
-        <Form.Group as={Row} className="mb-1" controlId="rateAdd">
+        <Form.Group as={Row} className="mb-1" controlId="pmtAdd">
           <Form.Label column sm={8}>
-            Assumed rate of return (from above)
+            <HelpText text="Additional amount deposited annually" tooltip={pmtText} />
           </Form.Label>
           <Col sm={4}>
-            <InputType disabled type="percent" value={values.rate} />
+            <InputType type="dollar" value={values.pmtAdd} onChange={changeHandler} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-3" controlId="compoundingAdd">
@@ -113,15 +116,9 @@ function Save() {
         </Form.Group>
       </Form>
       <Row>
-        <Col sm={8}>
-          Additional amount needed to be saved/invested annually
-        </Col>
-        <Col sm={4}>
-          {currency(pmt)}
-        </Col>
+        <Col sm={8}>What do I need to earn as an average annual rate of return?</Col>
+        <Col sm={4}>{percent(pvAdd)}</Col>
       </Row>
     </Container>
   );
 }
-
-export default Save;

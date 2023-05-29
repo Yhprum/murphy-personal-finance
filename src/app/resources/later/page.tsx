@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+"use client";
+import { useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
-import { FV, currency } from "../../utils";
-import InputType from "../../components/InputType";
-import HelpText from "../../components/HelpText";
-import { compoundingText, lumpSumText, rateText } from "../../assets/text/tooltips";
+import { FV, currency } from "@/lib/utils";
+import InputType from "@/components/InputType";
+import HelpText from "@/components/HelpText";
+import { compoundingText, lumpSumText, rateText } from "@/assets/text/tooltips";
 
-function Later() {
+export default function Later() {
   const [values, setValues] = useState({
     pv: 20000,
     rate: 6.5,
@@ -14,13 +15,18 @@ function Later() {
     pvAdd: 20000,
     nperAdd: 10,
     pmtAdd: 1200,
-    compoundingAdd: 12
+    compoundingAdd: 12,
   });
 
-  const changeHandler = e => setValues({...values, [e.target.id]: parseFloat(e.target.value)});
+  const changeHandler = (e: any) => setValues({ ...values, [e.target.id]: parseFloat(e.target.value) });
 
-  let fv = FV(values.rate  / 100/ values.compounding, values.nper * values.compounding, 0, -values.pv);
-  let fvAdd = FV(values.rate / 100 / values.compoundingAdd, values.nperAdd * values.compoundingAdd, -values.pmtAdd / values.compoundingAdd, -values.pvAdd);
+  let fv = FV(values.rate / 100 / values.compounding, values.nper * values.compounding, 0, -values.pv);
+  let fvAdd = FV(
+    values.rate / 100 / values.compoundingAdd,
+    values.nperAdd * values.compoundingAdd,
+    -values.pmtAdd / values.compoundingAdd,
+    -values.pvAdd
+  );
 
   return (
     <Container>
@@ -61,15 +67,13 @@ function Later() {
         </Form.Group>
       </Form>
       <Row>
-        <Col sm={8}>
-          How much will I have in the future?
-        </Col>
-        <Col sm={4}>
-          {currency(fv)}
-        </Col>
+        <Col sm={8}>How much will I have in the future?</Col>
+        <Col sm={4}>{currency(fv)}</Col>
       </Row>
-      <hr/>
-      <b>How much will I have in the future if I also <u>add a fixed amount each year</u> in addition to the above info?</b>
+      <hr />
+      <b>
+        How much will I have in the future if I also <u>add a fixed amount each year</u> in addition to the above info?
+      </b>
       <Form>
         <Form.Group as={Row} className="mb-1" controlId="pvAdd">
           <Form.Label column sm={8}>
@@ -113,15 +117,9 @@ function Later() {
         </Form.Group>
       </Form>
       <Row>
-        <Col sm={8}>
-          How much will I have in the future?
-        </Col>
-        <Col sm={4}>
-          {currency(fvAdd)}
-        </Col>
+        <Col sm={8}>How much will I have in the future?</Col>
+        <Col sm={4}>{currency(fvAdd)}</Col>
       </Row>
     </Container>
   );
 }
-
-export default Later;

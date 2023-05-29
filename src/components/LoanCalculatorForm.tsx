@@ -1,23 +1,31 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
-import { currency, PMT, RATE } from "../utils";
+import { currency, PMT, RATE } from "@/lib/utils";
 import InputType from "./InputType";
 import HelpText from "./HelpText";
 import { interestRateText, loanAmountText, pmtsPerYearText, termText } from "../assets/text/tooltips";
 
-function LoanCalculatorForm({ title, rate, points, letter, pmtNoPoints, setPmt }) {
+interface Props {
+  title: string;
+  rate?: number;
+  points?: number;
+  letter?: string;
+  pmtNoPoints?: number;
+  setPmt?: (pmt: number) => void;
+}
+function LoanCalculatorForm({ title, rate, points, letter, pmtNoPoints, setPmt }: Props) {
   const [values, setValues] = useState({
     loanAmount: 350000,
     rate: rate ?? 3,
     term: 30,
     pmtsPerYear: 12,
-    points: points ?? 1
+    points: points ?? 1,
   });
 
-  const changeHandler = e => setValues({...values, [e.target.id]: parseFloat(e.target.value)});
+  const changeHandler = (e: any) => setValues({ ...values, [e.target.id]: parseFloat(e.target.value) });
 
   let pmt = PMT(values.rate / 100 / values.pmtsPerYear, values.term * values.pmtsPerYear, values.loanAmount * -1);
-  if (!points) setPmt(pmt);
+  if (!points && setPmt) setPmt(pmt);
 
   return (
     <Row>
@@ -32,7 +40,7 @@ function LoanCalculatorForm({ title, rate, points, letter, pmtNoPoints, setPmt }
               <InputType type="dollar" value={values.loanAmount} onChange={changeHandler} />
             </Col>
           </Form.Group>
-          {points ?
+          {points ? (
             <Form.Group as={Row} className="mb-1" controlId="points">
               <Form.Label column sm={5}>
                 Points
@@ -41,11 +49,10 @@ function LoanCalculatorForm({ title, rate, points, letter, pmtNoPoints, setPmt }
                 <InputType type="percent" value={values.points} onChange={changeHandler} />
               </Col>
               <Col sm={4}>
-                <InputType type="dollar" value={values.points / 100 * values.loanAmount} onChange={changeHandler} />
+                <InputType type="dollar" value={(values.points / 100) * values.loanAmount} onChange={changeHandler} />
               </Col>
             </Form.Group>
-            : null
-          }
+          ) : null}
           <Form.Group as={Row} className="mb-1" controlId="rate">
             <Form.Label column sm={8}>
               <HelpText text="Interest Rate" tooltip={interestRateText} />
@@ -54,17 +61,20 @@ function LoanCalculatorForm({ title, rate, points, letter, pmtNoPoints, setPmt }
               <InputType type="percent" value={values.rate} onChange={changeHandler} />
             </Col>
           </Form.Group>
-          {points ?
+          {points ? (
             <Form.Group as={Row} className="mb-1" controlId="ratePoints">
               <Form.Label column sm={8}>
                 Rate With Points
               </Form.Label>
               <Col sm={4}>
-                <InputType disabled type="percent" value={RATE(values.term * values.pmtsPerYear, pmt, values.loanAmount * (values.points / 100 - 1)) * 12 * 100} />
+                <InputType
+                  disabled
+                  type="percent"
+                  value={RATE(values.term * values.pmtsPerYear, pmt, values.loanAmount * (values.points / 100 - 1)) * 12 * 100}
+                />
               </Col>
             </Form.Group>
-            : null
-          }
+          ) : null}
           <Form.Group as={Row} className="mb-1" controlId="term">
             <Form.Label column sm={8}>
               <HelpText text="Term" tooltip={termText} />
@@ -83,41 +93,38 @@ function LoanCalculatorForm({ title, rate, points, letter, pmtNoPoints, setPmt }
           </Form.Group>
         </Form>
         <Row>
-          <Col sm={8}>
-            Loan/Mortgage Payment per Month (P&I only)
-          </Col>
-          <Col sm={4}>
-            {currency(pmt)}
-          </Col>
+          <Col sm={8}>Loan/Mortgage Payment per Month (P&I only)</Col>
+          <Col sm={4}>{currency(pmt)}</Col>
         </Row>
       </Col>
-      {points ?
+      {points && pmtNoPoints ? (
         <Col lg={6}>
           <table>
             <thead>
-            <tr>
-              <th colSpan={2}>Comparing Loan A (no points) to Loan {letter}</th>
-            </tr>
+              <tr>
+                <th colSpan={2}>Comparing Loan A (no points) to Loan {letter}</th>
+              </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>{(values.points / 100 * values.loanAmount / (pmtNoPoints - pmt)).toFixed(1)}</td>
-              <td>months to breakeven</td>
-            </tr>
-            <tr>
-              <td>{(values.points / 100 * values.loanAmount / (pmtNoPoints - pmt) / 12).toFixed(1)}</td>
-              <td>years to breakeven</td>
-            </tr>
+              <tr>
+                <td>{(((values.points / 100) * values.loanAmount) / (pmtNoPoints - pmt)).toFixed(1)}</td>
+                <td>months to breakeven</td>
+              </tr>
+              <tr>
+                <td>{(((values.points / 100) * values.loanAmount) / (pmtNoPoints - pmt) / 12).toFixed(1)}</td>
+                <td>years to breakeven</td>
+              </tr>
             </tbody>
           </table>
         </Col>
-        :
+      ) : (
         <Col lg={6}>
           <b>Simple Points breakeven analysis (ignoring time value of money)</b>
-          <br/>If you think you won't hold the loan past the breakeven time period, take the loan with the higher
-          interest rate and no points.
+          <br />
+          If you think you won&apos;t hold the loan past the breakeven time period, take the loan with the higher interest rate and no
+          points.
         </Col>
-      }
+      )}
     </Row>
   );
 }

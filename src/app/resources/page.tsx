@@ -1,9 +1,9 @@
-import React from "react";
+"use client";
 import { Container, Row, Col } from "react-bootstrap";
-import ResourcePreview from "../components/ResourcePreview";
-import "../assets/css/Resources.css";
+import "@/assets/css/resources.css";
+import ResourcePreview from "@/components/ResourcePreview";
 
-function Resources() {
+export default function Resources() {
   return (
     <Container>
       <Row className="resources">
@@ -53,5 +53,3 @@ function Resources() {
     </Container>
   );
 }
-
-export default Resources;
